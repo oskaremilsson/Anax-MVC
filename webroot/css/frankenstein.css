@@ -1,0 +1,169 @@
+/**
+ * General elements
+ */
+
+@import url(figure.css);
+* {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+body {
+  color: #000;
+  font-family: arial, sans-serif;
+  overflow-y: scroll;
+  background: #ccc;
+}
+
+h1 {
+  font-size: 2.2em;
+}
+
+
+/**
+ * Layout of the main page elements 
+ */
+#wrapper {
+  margin: 0 auto;
+  width: 980px; 
+  padding: 0 10px 10px 10px;
+}
+
+/**
+ * Layout for header
+ */
+#header {
+  position: relative;
+  margin-bottom: 0;
+  height: 100px;
+  background: url(../img/franken_eyes.png) #9db97e;
+  margin-top: -40px;
+}
+
+#frankenhead {
+  position: relative;
+  margin-top: 0;
+  width: 980px;
+  height: 50px;
+  background: url(../img/header_head.png) #9db97e;
+}
+
+#frankenhead:before, #frankenhead:after {
+  content: "";
+  display: block;
+  height: 50px;
+  margin-top: 0;
+}
+
+#frankenhead:before {
+  width: 29px;
+  margin-left: -29px;
+  background: url(../img/franken_hair_left.png);
+}
+
+#frankenhead:after {
+  width: 18px;
+  margin-left: 980px;
+  margin-top: -50px;
+  background: url(../img/franken_hair_right.png);
+}
+
+#header:before, #header:after {
+  content: "";
+  display: block;
+  height: 40px;
+  width: 20px;
+  background: #112d4e;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+#header:before {
+  margin-top: 40px;
+  margin-left: -21px;
+  border-left: 1px solid #000;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#header:after {
+  margin-top: -40px;
+  margin-left: 980px;
+  border-right: 1px solid #000;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.sitetitle {
+  position: absolute;
+  top: 50px;
+  left: 340px;
+  font-size: 50px;
+}
+
+.siteslogan {
+  position: absolute;
+  top: 25px;
+  left: 400px;
+  font-style: italic;
+  color: #666;
+}
+
+
+/**
+ * Layout for main
+ */
+#main {
+  background: #FFF;
+  min-height: 20em;
+  padding: 10px 10px 10px 10px;
+  width: 950px;
+  border-left: 5px solid #9db97e;
+  border-right: 5px solid #9db97e;
+  border-top: 1px solid #ccc;
+}
+
+
+/**
+ * Layout for footer
+ */
+#footer {
+  background: #FFF;
+  text-align: center;
+  padding-top: 40px;
+  border-top: 1px solid #ccc;
+  padding-top: 22px;
+  border-bottom: 5px solid #9db97e;
+  border-left: 5px solid #9db97e;
+  border-right: 5px solid #9db97e;
+}
+
+.sitefooter {
+  color: #666;
+}
+
+
+/**
+ * For articles
+ */
+.article1 {
+  width: 700px;
+  border-right: 1px solid #ccc;
+  padding-right: 1em;
+}
+
+.article1 h1,
+.article1 h2 {
+  border-bottom: 1px solid #ccc;
+}
+
+.byline {
+  margin-top: 44px;
+  border-top: 1px dashed #ccc;
+  padding-top: 22px;
+  color: #666;
+}
+
+.byline p {
+  margin-top: 0;
+}
