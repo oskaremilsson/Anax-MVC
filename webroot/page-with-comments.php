@@ -4,11 +4,14 @@
  *
  */
 // Include the essential settings.
-require __DIR__.'/config.php'; 
+require __DIR__.'/config_with_app.php';
 
 
 // Create services and inject into the app. 
-$di  = new \Anax\DI\CDIFactoryDefault();
+//$di  = new \Anax\DI\CDIFactoryDefault();
+$app->url->setUrlType(\Anax\Url\CUrl::URL_CLEAN);
+$app->theme->configure(ANAX_APP_PATH . 'config/theme_me.php');
+$app->navbar->configure(ANAX_APP_PATH . 'config/navbar_me.php');
 
 $di->set('CommentController', function() use ($di) {
     $controller = new Phpmvc\Comment\CommentController();

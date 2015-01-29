@@ -7,14 +7,15 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Mikael Roos",
-            "email": "me@mikaelroos.se",
-            "homepage": "http://mikaelroos.se",
+            "name": "Oskar Emilsson",
+            "email": "oskaremilsson@gmail.com",
+            "homepage": "http://oskaremilsson.se",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": ">=5.4"
+        "php": ">=5.4",
+        "phpmvc/comment": "dev-master"
     },
     "require-dev": {
         "satooshi/php-coveralls": "dev-master"
