@@ -1,0 +1,1 @@
+<p class="write-comment-link"><a href="<?=$this->url->create('comment/write')?>">Skriv en kommentar</a></p>
