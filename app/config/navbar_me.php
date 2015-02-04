@@ -40,6 +40,12 @@ return [
             ],
         ],
 
+        'comment'  => [
+            'text'  => 'Kommentarer',
+            'url'   => $this->di->get('url')->create('comment'),
+            'title' => 'Kommentarer'
+        ],
+
         'source'  => [
             'text'  => 'Källkod',
             'url'   => $this->di->get('url')->create('source'),

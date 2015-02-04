@@ -16,14 +16,22 @@ class CommentController implements \Anax\DI\IInjectionAware
     *
     * @return void
     */
+    
     public function indexAction()
     {
         $this->theme->setTitle("Kommentarer");
         $this->views->add('comment/index');
-        $this->views->add('comment/write');
+        $this->views->add('comment/write', [
+                        'key' => 'comment', 
+                        'redirect' => 'comment'
+                        ]);
         $this->dispatcher->forward([
             'controller' => 'comment',
             'action'     => 'view',
+            'params' => [
+                'key' => 'comment', 
+                'redirect' => 'comment', 
+            ],
         ]);
     }
 
@@ -32,8 +40,10 @@ class CommentController implements \Anax\DI\IInjectionAware
     *
     * @return void
     */
-    public function writeAction()
+    public function writeAction($key=null,$redirect=null)
     {
+        $key = $this->request->getPost('key');
+        $redirect = $this->request->getPost('redirect');
         $this->theme->setTitle("Kommentarer");
         $this->views->add('comment/index');
 
@@ -43,11 +53,17 @@ class CommentController implements \Anax\DI\IInjectionAware
             'name'      => null,
             'content'   => null,
             'output'    => null,
+            'key'       => $key,
+            'redirect'  => $redirect,
         ]);
-
+        
         $this->dispatcher->forward([
             'controller' => 'comment',
             'action'     => 'view',
+            'params' => [
+                'key' => $key, 
+                'redirect' => $redirect, 
+            ],
         ]);
     }
 
@@ -58,15 +74,17 @@ class CommentController implements \Anax\DI\IInjectionAware
      *
      * @return void
      */
-    public function viewAction()
+    public function viewAction($key=null,$redirect=null)
     {
-        $comments = new \Anax\Comment\CommentsInSession();
+        $comments = new \Anax\Comment\CommentsInSession($key);
         $comments->setDI($this->di);
 
         $all = $comments->findAll();
-
         $this->views->add('comment/comments', [
             'comments' => $all,
+            'key' => $key, 
+            'redirect' => $redirect, 
+            
         ]);
     }
 
@@ -94,7 +112,7 @@ class CommentController implements \Anax\DI\IInjectionAware
             'ip'        => $this->request->getServer('REMOTE_ADDR'),
         ];
 
-        $comments = new \Anax\Comment\CommentsInSession();
+        $comments = new \Anax\Comment\CommentsInSession($this->request->getPost('key'));
         $comments->setDI($this->di);
 
         $comments->add($comment);
@@ -117,7 +135,7 @@ class CommentController implements \Anax\DI\IInjectionAware
             $this->response->redirect($this->request->getPost('redirect'));
         }
 
-        $comments = new \Anax\Comment\CommentsInSession();
+        $comments = new \Anax\Comment\CommentsInSession($this->request->getPost('key'));
         $comments->setDI($this->di);
 
         $comments->deleteAll();
@@ -132,7 +150,7 @@ class CommentController implements \Anax\DI\IInjectionAware
      */
     public function editAction()
     {
-        $comments = new \Anax\Comment\CommentsInSession();
+        $comments = new \Anax\Comment\CommentsInSession($this->request->getPost('key'));
         $comments->setDI($this->di);
 
         $comment = $comments->findAll();
@@ -145,6 +163,8 @@ class CommentController implements \Anax\DI\IInjectionAware
             'content'   => $comment[$id]['content'],
             'output'    => null,
             'id'        => $id,
+            'key'       => $this->request->getPost('key'),
+            'redirect'  => $this->request->getPost('redirect'),
         ]);
     }
 
@@ -169,7 +189,7 @@ class CommentController implements \Anax\DI\IInjectionAware
             'ip'        => $this->request->getServer('REMOTE_ADDR'),
         ];
 
-        $comments = new \Anax\Comment\CommentsInSession();
+        $comments = new \Anax\Comment\CommentsInSession($this->request->getPost('key'));
         $comments->setDI($this->di);
 
         $comments->edit($id, $comment);
@@ -184,15 +204,11 @@ class CommentController implements \Anax\DI\IInjectionAware
      */
     public function deleteAction()
     {
-        $comments = new \Anax\Comment\CommentsInSession();
+        $comments = new \Anax\Comment\CommentsInSession($this->request->getPost('key'));
         $comments->setDI($this->di);
         $id = $this->request->getPost('id');
 
         $comments->deleteComment($id);
         $this->response->redirect($this->request->getPost('redirect'));
-        /*$this->dispatcher->forward([
-        'controller' => 'comment',
-        'action'     => '',
-        ]);*/
     }
 }

@@ -10,6 +10,13 @@ $app->url->setUrlType(\Anax\Url\CUrl::URL_CLEAN);
 $app->theme->configure(ANAX_APP_PATH . 'config/theme_me.php');
 $app->navbar->configure(ANAX_APP_PATH . 'config/navbar_me.php');
 
+//add controller for comments
+$di->set('CommentController', function() use ($di) {
+    $controller = new Anax\Comment\CommentController();
+    $controller->setDI($di);
+    return $controller;
+});
+
 $app->router->add('', function() use ($app) {
     $app->theme->setTitle("Me");
     $content = $app->fileContent->get('me.md');
@@ -22,6 +29,31 @@ $app->router->add('', function() use ($app) {
         'content' => $content,
         'byline' => $byline,
     ]);
+
+    $app->views->add('comment/write', [
+                        'key' => 'home', 
+                        'redirect' => ''
+                        ]);
+
+
+    $app->dispatcher->forward([ 
+        'controller' => 'comment', 
+        'action'     => 'view', 
+        'params' => [ 
+            'key' => 'home', 
+            'redirect' => '', 
+        ], 
+    ]); 
+    /*
+    $app->views->add('comment/form', [
+        'mail'      => null, 
+        'web'       => null, 
+        'name'      => null, 
+        'content'   => null, 
+        'output'    => null, 
+        'key'         => 'home', 
+        'redirect'    => '',
+    ]); */
 });
  
 $app->router->add('redovisning', function() use ($app) {
@@ -37,6 +69,21 @@ $app->router->add('redovisning', function() use ($app) {
         'content' => $content,
         'byline' => $byline,
     ]);
+
+    $app->views->add('comment/write', [
+                        'key' => 'redovisning', 
+                        'redirect' => 'redovisning'
+                        ]);
+
+    $app->dispatcher->forward([
+        'controller' => 'comment', 
+        'action'     => 'view', 
+        'params' => [ 
+            'key' => 'redovisning', 
+            'redirect' => 'redovisning',          
+        ], 
+    ]); 
+
 });
  
 $app->router->add('source', function() use ($app) {
@@ -52,6 +99,7 @@ $app->router->add('source', function() use ($app) {
         'content' => $source->View(),
     ]);
 });
+
 
 // Render the response using theme engine.
 $app->router->handle();

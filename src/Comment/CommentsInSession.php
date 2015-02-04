@@ -10,7 +10,11 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
 {
     use \Anax\DI\TInjectable;
 
+    private $key = null;
 
+    public function __construct($key=null) { 
+        $this->key = 'comments-' . $key; 
+    } 
 
     /**
      * Add a new comment.
@@ -21,9 +25,9 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      */
     public function add($comment)
     {
-        $comments = $this->session->get('comments', []);
-        $comments[] = $comment;
-        $this->session->set('comments', $comments);
+        $comments = $this->session->get($this->key, []); 
+        $comments[] = $comment; 
+        $this->session->set($this->key, $comments); 
     }
 
     /**
@@ -35,10 +39,10 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      */
     public function edit($id, $comment)
     {
-        $comments = $this->session->get('comments', []);
+        $comments = $this->session->get($this->key, []);
         $comments[$id] = $comment;
 
-        $this->session->set('comments', $comments);
+        $this->session->set($this->key, $comments);
     }
 
     /**
@@ -48,7 +52,7 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      */
     public function findAll()
     {
-        return $this->session->get('comments', []);
+        return $this->session->get($this->key, []);
     }
 
 
@@ -60,7 +64,7 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      */
     public function deleteAll()
     {
-        $this->session->set('comments', []);
+        $this->session->set($this->key, []);
     }
 
     /**
@@ -70,9 +74,9 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      */
     public function deleteComment($id)
     {
-        $comments = $this->session->get('comments', []);
-        unset($comments[$id]);
+        $comments = $this->session->get($this->key, []); 
+        unset($comments[$id]); 
         $comments = array_values($comments); // 'reindex' array
-        $this->session->set('comments', $comments);
+        $this->session->set($this->key, $comments); 
     }
 }
