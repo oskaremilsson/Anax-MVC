@@ -45,4 +45,6 @@
 ?>
 <?php endforeach; ?>
 </div>
+<?php else : ?>
+<h4>Inga kommentarer</h4>
 <?php endif; ?>
